@@ -33,22 +33,14 @@ const square null_square = square(-1, -1, -1, -1, dir::none);
 square *derive(square parent) {
     square *children = new square[4];
     long ln = (parent.x2 - parent.x1) / 3;
-    if(parent.obsolete != dir::left)
-        children[0] = square(parent.x1 + ln, parent.y1 - ln, parent.x2 - ln, parent.y1, dir::right);
-    else
-        children[0] = null_square;
-    if(parent.obsolete != dir::top)
-        children[1] = square(parent.x1 - ln, parent.y1 + ln, parent.x1, parent.y2 - ln, dir::bottom);
-    else
-        children[1] = null_square;
-    if(parent.obsolete != dir::right)
-        children[2] = square(parent.x1 + ln, parent.y2, parent.x2 - ln, parent.y2 + ln, dir::left);
-    else
-        children[2] = null_square;
-    if(parent.obsolete != dir::bottom)
-        children[3] = square(parent.x2, parent.y1 + ln, parent.x2 + ln, parent.y2 - ln, dir::top);
-    else
-        children[3] = null_square;
+    children[0] = parent.obsolete == dir::left ? 
+        null_square : square(parent.x1 + ln, parent.y1 - ln, parent.x2 - ln, parent.y1, dir::right); 
+    children[1] = parent.obsolete == dir::top ? 
+        null_square : square(parent.x1 - ln, parent.y1 + ln, parent.x1, parent.y2 - ln, dir::bottom);
+    children[2] = parent.obsolete == dir::right ? 
+        null_square : square(parent.x1 + ln, parent.y2, parent.x2 - ln, parent.y2 + ln, dir::left);
+    children[3] = parent.obsolete == dir::bottom ? 
+        null_square : square(parent.x2, parent.y1 + ln, parent.x2 + ln, parent.y2 - ln, dir::top);
     return children;
 }
 
