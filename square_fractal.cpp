@@ -106,7 +106,7 @@ int main(void) {
         return 0;
     }
     if(init_block % long(pow(3, complexity))) {
-        cout << "Impossible: unable to place last iteration blocks correctly."; // переформулировать вывод
+        cout << "Impossible: unable to place last iteration blocks correctly.";
         return 0;
     }
     char **matrix = new char*[size];
