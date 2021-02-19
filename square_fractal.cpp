@@ -7,7 +7,7 @@
 
 using namespace std;
 
-typedef enum {none, right, left, top, bottom} dir;
+enum class dir {none, right, left, top, bottom};
 
 struct square {
     long x1, y1, x2, y2;
@@ -96,7 +96,8 @@ int main(void) {
     cin >> gothic_mode;
     long init_block = size / 2;
     if(init_block % 2 != size % 2)
-        cout << "Impossible to place initial block in the center, off-center placement would not fit, increasing size to " << ++size << "." << endl;
+        cout << "Impossible to place initial block in the center, off-center placement would not fit, increasing size to "
+         << ++size << "." << endl;
     if(size <= 0 || complexity < 0) {
         cout << "Impossible: wrong input." << endl;
         return 0;
@@ -115,8 +116,8 @@ int main(void) {
         for(long y = 0; y < size; y++)
             matrix[x][y] = '.';
     }
-    long cur_blocks = 1;
-    square *blocks = new square(size / 2 - init_block / 2,
+    square *blocks = new square[1];
+    blocks[0] = square(size / 2 - init_block / 2,
         size / 2 - init_block / 2,
         size / 2 + ceil(float(init_block) / 2.), 
         size / 2 + ceil(float(init_block) / 2.), 
@@ -125,9 +126,9 @@ int main(void) {
     fractal(matrix, size, blocks, 1, complexity);
     for(long x = 0; x < size; x++) {
         for(long y = 0; y < size; y++) {
-            if(gothic_mode == true && matrix[x][y] == '.')
+            if(gothic_mode && matrix[x][y] == '.')
                 cout << "\033[30m" << matrix[x][y];
-            else if(gothic_mode == true && (matrix[x - 1][y] == '.' 
+            else if(gothic_mode && (matrix[x - 1][y] == '.' 
             || matrix[x + 1][y] == '.' || matrix[x][y - 1] == '.'
             || matrix[x][y + 1] == '.'))
                 cout << "\033[31m" << matrix[x][y] << "\033[37m";
